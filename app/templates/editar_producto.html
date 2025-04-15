@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Editar Producto - Panadería Bernal</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'bread-brown': {
+                            50: '#f9f6f3',
+                            100: '#f1e9e1',
+                            200: '#e6d5c7',
+                            300: '#d9bea8',
+                            400: '#c9a285',
+                            500: '#bb8c6a',
+                            600: '#a97658',
+                            700: '#8c5e48',
+                            800: '#734e3e',
+                            900: '#5f4235',
+                            950: '#332219',
+                        },
+                    },
+                    fontFamily: {
+                        'sans': ['Inter', 'sans-serif'],
+                    },
+                },
+            },
+        }
+    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        .modal {
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+        .modal:target {
+            opacity: 1;
+            visibility: visible;
+        }
+        .modal-img {
+            transform: scale(0.9);
+            transition: all 0.3s ease;
+        }
+        .modal:target .modal-img {
+            transform: scale(1);
+        }
+    </style>
+</head>
+<body class="bg-bread-brown-50 text-bread-brown-900 font-sans min-h-screen">
+    <div class="max-w-4xl mx-auto py-12 px-6">
+        <div class="bg-white shadow-lg rounded-xl overflow-hidden border border-bread-brown-100">
+            <div class="bg-bread-brown-600 text-white px-8 py-5">
+                <h1 class="text-2xl font-bold">Editar Producto</h1>
+                <p class="text-bread-brown-100 text-sm mt-1">Actualiza la información del producto</p>
+            </div>
+
+            <form action="{{ url_for('main.editar_producto', id=producto.id) }}" method="POST" enctype="multipart/form-data" class="p-8 space-y-6">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="space-y-2">
+                        <label class="block text-sm font-medium text-bread-brown-700">Nombre del Producto</label>
+                        <input type="text" name="nombre" value="{{ producto.nombre }}" required 
+                            class="w-full px-4 py-3 border border-bread-brown-200 rounded-lg focus:ring-2 focus:ring-bread-brown-400 focus:border-bread-brown-400 transition-all">
+                    </div>
+                    
+                    <div class="space-y-2">
+                        <label class="block text-sm font-medium text-bread-brown-700">Precio (€)</label>
+                        <div class="relative">
+                            <span class="absolute inset-y-0 left-0 flex items-center pl-4 text-bread-brown-500">€</span>
+                            <input type="number" step="0.01" name="precio" value="{{ producto.precio }}" required 
+                                class="w-full pl-10 pr-4 py-3 border border-bread-brown-200 rounded-lg focus:ring-2 focus:ring-bread-brown-400 focus:border-bread-brown-400 transition-all">
+                        </div>
+                    </div>
+                    
+                    <div class="space-y-2">
+                        <label class="block text-sm font-medium text-bread-brown-700">Categoría</label>
+                        <input type="text" name="categoria" value="{{ producto.categoria }}" required 
+                            class="w-full px-4 py-3 border border-bread-brown-200 rounded-lg focus:ring-2 focus:ring-bread-brown-400 focus:border-bread-brown-400 transition-all">
+                    </div>
+                    
+                    <div class="space-y-2">
+                        <label class="block text-sm font-medium text-bread-brown-700">Imagen del Producto</label>
+                        <div class="border-2 border-dashed border-bread-brown-200 rounded-lg p-4 text-center hover:bg-bread-brown-50 transition-colors">
+                            <input type="file" name="imagen" accept="image/*"
+                                class="w-full cursor-pointer file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-bread-brown-500 file:text-white hover:file:bg-bread-brown-600">
+                            <!-- Campo oculto para mantener imagen actual -->
+                            <input type="hidden" name="imagen_actual" value="{{ producto.imagen }}">
+                            
+                            {% if producto.imagen %}
+                            <div class="mt-4 flex justify-center">
+                                <div class="relative group">
+                                    <a href="#imagen-ampliada" class="block cursor-zoom-in">
+                                        <img src="{{ url_for('static', filename=producto.imagen) }}" alt="Imagen actual" 
+                                            class="w-40 h-40 object-cover rounded-lg shadow-md border border-bread-brown-200">
+                                        <div class="absolute inset-0 bg-bread-brown-900 bg-opacity-40 opacity-0 group-hover:opacity-100 rounded-lg flex items-center justify-center transition-opacity">
+                                            <span class="text-white text-xs font-medium px-2 py-1 bg-bread-brown-800 rounded">Click para ampliar</span>
+                                        </div>
+                                    </a>
+                                </div>
+                            </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="space-y-2">
+                    <label class="block text-sm font-medium text-bread-brown-700">Descripción</label>
+                    <textarea name="descripcion" rows="4" required 
+                        class="w-full px-4 py-3 border border-bread-brown-200 rounded-lg focus:ring-2 focus:ring-bread-brown-400 focus:border-bread-brown-400 transition-all">{{ producto.descripcion }}</textarea>
+                </div>
+                
+                <div class="flex items-center justify-between pt-4 border-t border-bread-brown-100">
+                    <a href="{{ url_for('main.dashboard') }}" 
+                        class="inline-flex items-center text-bread-brown-600 hover:text-bread-brown-800 transition-colors">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+                        </svg>
+                        Volver al panel
+                    </a>
+                    
+                    <button type="submit" 
+                        class="px-6 py-3 bg-bread-brown-600 text-white font-medium rounded-lg shadow-md hover:bg-bread-brown-700 focus:outline-none focus:ring-2 focus:ring-bread-brown-500 focus:ring-opacity-50 transition-all">
+                        Guardar cambios
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Modal para imagen ampliada -->
+    {% if producto.imagen %}
+    <div id="imagen-ampliada" class="modal fixed inset-0 z-50 flex items-center justify-center bg-bread-brown-900 bg-opacity-80 p-4">
+        <div class="relative max-w-4xl w-full">
+            <div class="modal-img bg-white rounded-xl p-4 shadow-2xl">
+                <div class="flex justify-between items-center mb-4">
+                    <h3 class="text-xl font-bold text-bread-brown-800">{{ producto.nombre }}</h3>
+                    <a href="#" class="text-bread-brown-500 hover:text-bread-brown-700 transition-colors">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                        </svg>
+                    </a>
+                </div>
+                <div class="flex justify-center">
+                    <img src="{{ url_for('static', filename=producto.imagen) }}" alt="{{ producto.nombre }}" 
+                        class="max-h-[70vh] object-contain rounded-lg shadow-md">
+                </div>
+                <div class="mt-4 text-center">
+                    <a href="#" class="inline-block px-4 py-2 bg-bread-brown-600 text-white font-medium rounded-lg shadow-md hover:bg-bread-brown-700 transition-colors">
+                        Cerrar
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+</body>
+</html>

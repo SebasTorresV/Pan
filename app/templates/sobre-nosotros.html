@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sobre Nosotros - Panadería Bernal</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'bread-brown': {
+                            50: '#fdf8f6',
+                            100: '#f2e8e5',
+                            200: '#eaddd7',
+                            300: '#e0cec7',
+                            400: '#d2bab0',
+                            500: '#bfa094',
+                            600: '#a18072',
+                            700: '#977669',
+                            800: '#846358',
+                            900: '#43302b',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+</head>
+<body class="flex flex-col min-h-screen bg-bread-brown-50">
+    <!-- Header/Navigation -->
+    <header class="bg-white shadow-md sticky top-0 z-50">
+        <div class="container mx-auto px-4">
+            <div class="flex justify-between items-center py-4">
+                <div class="flex items-center">
+                    <a href="{{ url_for('main.home') }}" class="text-2xl font-bold text-bread-brown-800">
+                        <span class="text-bread-brown-600">Panadería</span> Bernal
+                    </a>
+                </div>
+                
+                <!-- Desktop Navigation -->
+                <nav class="hidden md:flex space-x-8">
+                    <a href="{{ url_for('main.home') }}" class="text-bread-brown-800 hover:text-bread-brown-600 font-medium">Inicio</a>
+                    <a href="{{ url_for('main.productos') }}" class="text-bread-brown-800 hover:text-bread-brown-600 font-medium">Productos</a>
+                    <a href="{{ url_for('main.sobre_nosotros') }}" class="text-bread-brown-800 hover:text-bread-brown-600 font-medium">Sobre Nosotros</a>
+                    <a href="{{ url_for('main.contacto') }}" class="text-bread-brown-800 hover:text-bread-brown-600 font-medium">Contacto</a>
+                </nav>
+                
+                <!-- Mobile Navigation Button -->
+                <div class="md:hidden">
+                    <button id="mobile-menu-button" class="text-bread-brown-800 focus:outline-none">
+                        <i class="fas fa-bars text-2xl"></i>
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Mobile Navigation Menu -->
+            <div id="mobile-menu" class="md:hidden hidden pb-4">
+                <a href="{{ url_for('main.home') }}" class="block py-2 text-bread-brown-800 hover:text-bread-brown-600 font-medium">Inicio</a>
+                <a href="{{ url_for('main.productos') }}" class="block py-2 text-bread-brown-800 hover:text-bread-brown-600 font-medium">Productos</a>
+                <a href="{{ url_for('main.sobre_nosotros') }}" class="block py-2 text-bread-brown-800 hover:text-bread-brown-600 font-medium">Sobre Nosotros</a>
+                <a href="{{ url_for('main.contacto') }}" class="block py-2 text-bread-brown-800 hover:text-bread-brown-600 font-medium">Contacto</a>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <!-- Page Header -->
+        <section class="bg-bread-brown-600 text-white py-12">
+            <div class="container mx-auto px-4">
+                <h1 class="text-4xl font-bold mb-4">Sobre Nosotros</h1>
+                <p class="text-xl max-w-3xl">Descubre la historia y valores detrás de Panadería Bernal, donde la tradición y la calidad se unen para ofrecerte los mejores productos de panadería.</p>
+            </div>
+        </section>
+
+        <!-- Our History -->
+        <section class="py-16 bg-white">
+            <div class="container mx-auto px-4">
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                    <div>
+                        <h2 class="text-3xl font-bold mb-6 text-bread-brown-800">Nuestra Historia</h2>
+                        <p class="text-bread-brown-700 mb-4">
+                            Panadería Bernal nació en 1985 como un pequeño negocio familiar en el corazón de nuestra ciudad. Fundada por Antonio Bernal, un apasionado panadero que aprendió el oficio de su padre, nuestra panadería comenzó con una simple misión: ofrecer pan fresco y de calidad a nuestros vecinos.
+                        </p>
+                        <p class="text-bread-brown-700 mb-4">
+                            Con el paso de los años, el negocio fue creciendo gracias al boca a boca y a la calidad constante de nuestros productos. En 1995, ampliamos nuestras instalaciones para incluir una sección de bollería y pastelería, manteniendo siempre la esencia artesanal que nos caracteriza.
+                        </p>
+                        <p class="text-bread-brown-700">
+                            Hoy, más de tres décadas después, la segunda generación de la familia Bernal continúa al frente del negocio, combinando las recetas tradicionales con técnicas modernas para ofrecer productos que mantienen el sabor auténtico pero se adaptan a los gustos y necesidades actuales.
+                        </p>
+                    </div>
+                    <div class="rounded-lg overflow-hidden shadow-lg">
+                        <img src="https://placehold.co/800x600/e0cec7/43302b?text=Historia+Panadería+Bernal" alt="Historia de Panadería Bernal" class="w-full h-full object-cover">
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Mission and Values -->
+        <section class="py-16 bg-bread-brown-100">
+            <div class="container mx-auto px-4">
+                <div class="text-center mb-12">
+                    <h2 class="text-3xl font-bold mb-4 text-bread-brown-800">Nuestra Misión y Valores</h2>
+                    <p class="text-bread-brown-700 max-w-3xl mx-auto">
+                        En Panadería Bernal, nos guiamos por principios claros que definen quiénes somos y cómo trabajamos cada día.
+                    </p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <!-- Mission -->
+                    <div class="bg-white rounded-lg shadow-md p-8">
+                        <div class="bg-bread-brown-200 rounded-full w-16 h-16 flex items-center justify-center mb-6 mx-auto">
+                            <i class="fas fa-bullseye text-2xl text-bread-brown-700"></i>
+                        </div>
+                        <h3 class="text-xl font-bold mb-4 text-bread-brown-800 text-center">Nuestra Misión</h3>
+                        <p class="text-bread-brown-700 text-center">
+                            Elaborar productos de panadería y pastelería de la más alta calidad, manteniendo vivas las tradiciones artesanales y ofreciendo a nuestros clientes una experiencia que combine sabor, frescura y atención personalizada.
+                        </p>
+                    </div>
+
+                    <!-- Vision -->
+                    <div class="bg-white rounded-lg shadow-md p-8">
+                        <div class="bg-bread-brown-200 rounded-full w-16 h-16 flex items-center justify-center mb-6 mx-auto">
+                            <i class="fas fa-eye text-2xl text-bread-brown-700"></i>
+                        </div>
+                        <h3 class="text-xl font-bold mb-4 text-bread-brown-800 text-center">Nuestra Visión</h3>
+                        <p class="text-bread-brown-700 text-center">
+                            Ser reconocidos como la panadería de referencia en nuestra región, destacando por la excelencia de nuestros productos, la innovación respetuosa con la tradición y el compromiso con la comunidad y el medio ambiente.
+                        </p>
+                    </div>
+
+                    <!-- Values -->
+                    <div class="bg-white rounded-lg shadow-md p-8">
+                        <div class="bg-bread-brown-200 rounded-full w-16 h-16 flex items-center justify-center mb-6 mx-auto">
+                            <i class="fas fa-heart text-2xl text-bread-brown-700"></i>
+                        </div>
+                        <h3 class="text-xl font-bold mb-4 text-bread-brown-800 text-center">Nuestros Valores</h3>
+                        <ul class="text-bread-brown-700 space-y-2">
+                            <li class="flex items-center">
+                                <i class="fas fa-check text-bread-brown-600 mr-2"></i>
+                                <span>Calidad en cada detalle</span>
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-check text-bread-brown-600 mr-2"></i>
+                                <span>Respeto por la tradición</span>
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-check text-bread-brown-600 mr-2"></i>
+                                <span>Honestidad y transparencia</span>
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-check text-bread-brown-600 mr-2"></i>
+                                <span>Compromiso con el cliente</span>
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-check text-bread-brown-600 mr-2"></i>
+                                <span>Sostenibilidad y responsabilidad</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Our Process -->
+        <section class="py-16 bg-white">
+            <div class="container mx-auto px-4">
+                <h2 class="text-3xl font-bold mb-12 text-bread-brown-800 text-center">Nuestro Proceso</h2>
+                
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <!-- Step 1 -->
+                    <div class="bg-bread-brown-50 rounded-lg shadow-md p-8 relative">
+                        <div class="absolute -top-5 -left-5 bg-bread-brown-600 text-white w-12 h-12 rounded-full flex items-center justify-center text-xl font-bold">1</div>
+                        <h3 class="text-xl font-semibold mb-4 text-bread-brown-800">Selección de Ingredientes</h3>
+                        <p class="text-bread-brown-700">
+                            Escogemos cuidadosamente las mejores materias primas, priorizando productos locales y de temporada. Nuestras harinas provienen de molinos tradicionales que mantienen los métodos de molienda que preservan todas las propiedades del grano.
+                        </p>
+                    </div>
+
+                    <!-- Step 2 -->
+                    <div class="bg-bread-brown-50 rounded-lg shadow-md p-8 relative">
+                        <div class="absolute -top-5 -left-5 bg-bread-brown-600 text-white w-12 h-12 rounded-full flex items-center justify-center text-xl font-bold">2</div>
+                        <h3 class="text-xl font-semibold mb-4 text-bread-brown-800">Elaboración Artesanal</h3>
+                        <p class="text-bread-brown-700">
+                            Cada pieza es elaborada a mano, respetando los tiempos de fermentación y reposo necesarios para desarrollar todo el sabor y aroma. Utilizamos masa madre natural para nuestros panes, lo que les confiere un sabor único y mejora su conservación.
+                        </p>
+                    </div>
+
+                    <!-- Step 3 -->
+                    <div class="bg-bread-brown-50 rounded-lg shadow-md p-8 relative">
+                        <div class="absolute -top-5 -left-5 bg-bread-brown-600 text-white w-12 h-12 rounded-full flex items-center justify-center text-xl font-bold">3</div>
+                        <h3 class="text-xl font-semibold mb-4 text-bread-brown-800">Horneado Tradicional</h3>
+                        <p class="text-bread-brown-700">
+                            Horneamos nuestros productos en hornos de piedra que distribuyen el calor de manera uniforme, consiguiendo una corteza perfecta y una miga esponjosa. Cada hornada se supervisa cuidadosamente para garantizar el punto exacto de cocción.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-bread-brown-800 text-white py-12 mt-auto">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <!-- About -->
+                <div>
+                    <h3 class="text-xl font-bold mb-4">Panadería Bernal</h3>
+                    <p class="text-bread-brown-200 mb-4">
+                        Tradición y sabor en cada bocado desde 1985. Elaboramos pan artesanal, bollería y pasteles con los mejores ingredientes.
+                    </p>
+                    <div class="flex space-x-4">
+                        <a href="https://www.facebook.com/PanaderiaBernal10/" target="_blank" class="text-bread-brown-200 hover:text-white transition duration-300">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- Quick Links -->
+                <div>
+                    <h3 class="text-xl font-bold mb-4">Enlaces Rápidos</h3>
+                    <ul class="space-y-2">
+                        <li><a href="{{ url_for('main.home') }}" class="text-bread-brown-200 hover:text-white transition duration-300">Inicio</a></li>
+                        <li><a href="{{ url_for('main.productos') }}" class="text-bread-brown-200 hover:text-white transition duration-300">Productos</a></li>
+                        <li><a href="{{ url_for('main.sobre_nosotros') }}" class="text-bread-brown-200 hover:text-white transition duration-300">Sobre Nosotros</a></li>
+                        <li><a href="{{ url_for('main.contacto') }}" class="text-bread-brown-200 hover:text-white transition duration-300">Contacto</a></li>
+                    </ul>
+                </div>
+                
+                <!-- Contact -->
+                <div>
+                    <h3 class="text-xl font-bold mb-4">Contacto</h3>
+                    <ul class="space-y-2">
+                        <li class="flex items-start">
+                            <i class="fas fa-map-marker-alt mt-1 mr-2 text-bread-brown-300"></i>
+                            <span class="text-bread-brown-200">Barrio el Centro, 2da C Oriente 6 PG6, San Jose Villanueva</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-phone mr-2 text-bread-brown-300"></i>
+                            <span class="text-bread-brown-200">7816 4048</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-envelope mr-2 text-bread-brown-300"></i>
+                            <span class="text-bread-brown-200">panaderiabernal2020@gmail.com</span>
+                        </li>
+                    </ul>
+                </div>
+                
+                <!-- Hours -->
+                <div>
+                    <h3 class="text-xl font-bold mb-4">Horario</h3>
+                    <ul class="space-y-2">
+                        <li class="text-bread-brown-200">Lunes a Viernes: 8:00 a.m. - 7:30 p.m.</li>
+                        <li class="text-bread-brown-200">Sábados: 8:00 a.m. - 6:00 p.m.</li>
+                        <li class="text-bread-brown-200">Domingos: CERRADO</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="border-t border-bread-brown-700 mt-8 pt-8 text-center text-bread-brown-300">
+                <p>&copy; <script>document.write(new Date().getFullYear())</script> Panadería Bernal. Todos los derechos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile menu toggle
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+        
+        mobileMenuButton.addEventListener('click', function() {
+            mobileMenu.classList.toggle('hidden');
+            
+            // Change icon based on menu state
+            const icon = mobileMenuButton.querySelector('i');
+            if (mobileMenu.classList.contains('hidden')) {
+                icon.classList.remove('fa-times');
+                icon.classList.add('fa-bars');
+            } else {
+                icon.classList.remove('fa-bars');
+                icon.classList.add('fa-times');
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Productos - Panadería Bernal</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'bread-brown': {
+                            50: '#fdf8f6',
+                            100: '#f2e8e5',
+                            200: '#eaddd7',
+                            300: '#e0cec7',
+                            400: '#d2bab0',
+                            500: '#bfa094',
+                            600: '#a18072',
+                            700: '#977669',
+                            800: '#846358',
+                            900: '#43302b',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+</head>
+<body class="flex flex-col min-h-screen bg-bread-brown-50">
+    <!-- Header/Navigation -->
+    <header class="bg-white shadow-md sticky top-0 z-50">
+        <div class="container mx-auto px-4">
+            <div class="flex justify-between items-center py-4">
+                <div class="flex items-center">
+                    <a href="{{ url_for('main.home') }}" class="text-2xl font-bold text-bread-brown-800">
+                        <span class="text-bread-brown-600">Panadería</span> Bernal
+                    </a>
+                </div>
+                
+                <!-- Desktop Navigation -->
+                <nav class="hidden md:flex space-x-8">
+                    <a href="{{ url_for('main.home') }}" class="text-bread-brown-800 hover:text-bread-brown-600 font-medium">Inicio</a>
+                    <a href="{{ url_for('main.productos') }}" class="text-bread-brown-800 hover:text-bread-brown-600 font-medium">Productos</a>
+                    <a href="{{ url_for('main.sobre_nosotros') }}" class="text-bread-brown-800 hover:text-bread-brown-600 font-medium">Sobre Nosotros</a>
+                    <a href="{{ url_for('main.contacto') }}" class="text-bread-brown-800 hover:text-bread-brown-600 font-medium">Contacto</a>
+                </nav>
+                
+                <!-- Mobile Navigation Button -->
+                <div class="md:hidden">
+                    <button id="mobile-menu-button" class="text-bread-brown-800 focus:outline-none">
+                        <i class="fas fa-bars text-2xl"></i>
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Mobile Navigation Menu -->
+            <div id="mobile-menu" class="md:hidden hidden pb-4">
+                <a href="{{ url_for('main.home') }}" class="block py-2 text-bread-brown-800 hover:text-bread-brown-600 font-medium">Inicio</a>
+                <a href="{{ url_for('main.productos') }}" class="block py-2 text-bread-brown-800 hover:text-bread-brown-600 font-medium">Productos</a>
+                <a href="{{ url_for('main.sobre_nosotros') }}" class="block py-2 text-bread-brown-800 hover:text-bread-brown-600 font-medium">Sobre Nosotros</a>
+                <a href="{{ url_for('main.contacto') }}" class="block py-2 text-bread-brown-800 hover:text-bread-brown-600 font-medium">Contacto</a>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <!-- Page Header -->
+        <section class="bg-bread-brown-600 text-white py-12">
+            <div class="container mx-auto px-4">
+                <h1 class="text-4xl font-bold mb-4">Nuestros Productos</h1>
+                <p class="text-xl max-w-3xl">Descubre nuestra amplia variedad de panes artesanales, bollería y pasteles elaborados diariamente con ingredientes de primera calidad.</p>
+            </div>
+        </section>
+
+        <!-- Product Categories -->
+        <section class="py-12 bg-white">
+            <div class="container mx-auto px-4">
+                <!-- Category Tabs -->
+                <div class="flex flex-wrap justify-center mb-12">
+                    <button class="category-tab active px-6 py-3 mx-2 mb-2 rounded-md bg-bread-brown-600 text-white font-medium" data-category="all">
+                        Todos
+                    </button>
+                </div>
+
+                    <!-- Products Grid (dinámico) -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+            {% for producto in productos %}
+            <div class="product-card" data-category="{{ producto.categoria }}">
+                <div class="bg-bread-brown-50 rounded-lg overflow-hidden shadow-md hover:shadow-lg transition-shadow">
+                    <img src="{{ producto.imagen or 'https://placehold.co/600x400/e0cec7/43302b?text=Sin+imagen' }}" alt="{{ producto.nombre }}" class="w-full h-48 object-cover">
+                    <div class="p-6">
+                        <div class="flex justify-between items-start mb-2">
+                            <h3 class="text-xl font-semibold text-bread-brown-800">{{ producto.nombre }}</h3>
+                            <span class="bg-bread-brown-100 text-bread-brown-800 px-2 py-1 rounded text-sm font-medium">
+                                {{ producto.precio }}€
+                            </span>
+                        </div>
+                        <p class="text-bread-brown-600 mb-4">{{ producto.descripcion }}</p>
+                        <button class="view-product-details text-bread-brown-700 hover:text-bread-brown-900 font-medium inline-flex items-center" data-product-id="{{ producto.id }}">
+                            Ver detalles <i class="fas fa-chevron-right ml-2 text-sm"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+  
+        <!-- Product Modal -->
+        <div id="product-modal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden">
+            <div class="bg-white rounded-lg max-w-4xl w-full mx-4 overflow-hidden">
+                <div class="flex justify-between items-center p-6 border-b border-bread-brown-200">
+                    <h3 id="modal-title" class="text-2xl font-bold text-bread-brown-800">Detalles del Producto</h3>
+                    <button id="close-modal" class="text-bread-brown-500 hover:text-bread-brown-700">
+                        <i class="fas fa-times text-xl"></i>
+                    </button>
+                </div>
+                <div class="p-6">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                        <div>
+                            <img id="modal-image" src="https://placehold.co/600x400/e0cec7/43302b" alt="Producto" class="w-full h-auto rounded-lg">
+                        </div>
+                        <div>
+                            <div class="flex justify-between items-start mb-4">
+                                <h4 id="modal-product-name" class="text-2xl font-semibold text-bread-brown-800">Nombre del Producto</h4>
+                                <span id="modal-price" class="bg-bread-brown-100 text-bread-brown-800 px-3 py-1 rounded-md text-lg font-medium">0.00€</span>
+                            </div>
+                            <p id="modal-description" class="text-bread-brown-600 mb-6">Descripción detallada del producto...</p>
+                            
+                            <div class="mb-6">
+                                <h5 class="font-medium text-bread-brown-800 mb-2">Ingredientes:</h5>
+                                <p id="modal-ingredients" class="text-bread-brown-600">Lista de ingredientes...</p>
+                            </div>
+                            
+                            <div class="mb-6">
+                                <h5 class="font-medium text-bread-brown-800 mb-2">Información Nutricional:</h5>
+                                <div id="modal-nutrition" class="text-bread-brown-600">
+                                    <p>Calorías: 000 kcal</p>
+                                    <p>Proteínas: 00g</p>
+                                    <p>Carbohidratos: 00g</p>
+                                    <p>Grasas: 00g</p>
+                                </div>
+                            </div>
+                            
+                            <div class="mb-6">
+                                <h5 class="font-medium text-bread-brown-800 mb-2">Alérgenos:</h5>
+                                <p id="modal-allergens" class="text-bread-brown-600">Información sobre alérgenos...</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-bread-brown-50 p-6 flex justify-end">
+                    <button id="close-modal-btn" class="bg-bread-brown-600 hover:bg-bread-brown-700 text-white px-6 py-3 rounded-md font-medium transition duration-300">
+                        Cerrar
+                    </button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-bread-brown-800 text-white py-12 mt-auto">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <!-- About -->
+                <div>
+                    <h3 class="text-xl font-bold mb-4">Panadería Bernal</h3>
+                    <p class="text-bread-brown-200 mb-4">
+                        Tradición y sabor en cada bocado desde 1985. Elaboramos pan artesanal, bollería y pasteles con los mejores ingredientes.
+                    </p>
+                    <div class="flex space-x-4">
+                        <a href="https://www.facebook.com/PanaderiaBernal10/" target="_blank" class="text-bread-brown-200 hover:text-white transition duration-300">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- Quick Links -->
+                <div>
+                    <h3 class="text-xl font-bold mb-4">Enlaces Rápidos</h3>
+                    <ul class="space-y-2">
+                        <li><a href="{{ url_for('main.home') }}" class="text-bread-brown-200 hover:text-white transition duration-300">Inicio</a></li>
+                        <li><a href="{{ url_for('main.productos') }}" class="text-bread-brown-200 hover:text-white transition duration-300">Productos</a></li>
+                        <li><a href="{{ url_for('main.sobre_nosotros') }}" class="text-bread-brown-200 hover:text-white transition duration-300">Sobre Nosotros</a></li>
+                        <li><a href="{{ url_for('main.contacto') }}" class="text-bread-brown-200 hover:text-white transition duration-300">Contacto</a></li>
+                    </ul>
+                </div>
+                
+                <!-- Contact -->
+                <div>
+                    <h3 class="text-xl font-bold mb-4">Contacto</h3>
+                    <ul class="space-y-2">
+                        <li class="flex items-start">
+                            <i class="fas fa-map-marker-alt mt-1 mr-2 text-bread-brown-300"></i>
+                            <span class="text-bread-brown-200">Barrio el Centro, 2da C Oriente 6 PG6, San Jose Villanueva</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-phone mr-2 text-bread-brown-300"></i>
+                            <span class="text-bread-brown-200">7816 4048</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-envelope mr-2 text-bread-brown-300"></i>
+                            <span class="text-bread-brown-200">panaderiabernal2020@gmail.com</span>
+                        </li>
+                    </ul>
+                </div>
+                
+                <!-- Hours -->
+                <div>
+                    <h3 class="text-xl font-bold mb-4">Horario</h3>
+                    <ul class="space-y-2">
+                        <li class="text-bread-brown-200">Lunes a Viernes: 8:00 a.m. - 7:30 p.m.</li>
+                        <li class="text-bread-brown-200">Sábados: 8:00 a.m. - 6:00 p.m.</li>
+                        <li class="text-bread-brown-200">Domingos: CERRADO</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="border-t border-bread-brown-700 mt-8 pt-8 text-center text-bread-brown-300">
+                <p>&copy; <script>document.write(new Date().getFullYear())</script> Panadería Bernal. Todos los derechos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile menu toggle
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+        
+        mobileMenuButton.addEventListener('click', function() {
+            mobileMenu.classList.toggle('hidden');
+            
+            // Change icon based on menu state
+            const icon = mobileMenuButton.querySelector('i');
+            if (mobileMenu.classList.contains('hidden')) {
+                icon.classList.remove('fa-times');
+                icon.classList.add('fa-bars');
+            } else {
+                icon.classList.remove('fa-bars');
+                icon.classList.add('fa-times');
+            }
+        });
+
+        // Category filtering
+        const categoryTabs = document.querySelectorAll('.category-tab');
+        const productCards = document.querySelectorAll('.product-card');
+
+        categoryTabs.forEach(tab => {
+            tab.addEventListener('click', function() {
+                // Remove active class from all tabs
+                categoryTabs.forEach(t => {
+                    t.classList.remove('active', 'bg-bread-brown-600', 'text-white');
+                    t.classList.add('bg-bread-brown-100', 'text-bread-brown-800');
+                });
+                
+                // Add active class to clicked tab
+                this.classList.add('active', 'bg-bread-brown-600', 'text-white');
+                this.classList.remove('bg-bread-brown-100', 'text-bread-brown-800');
+                
+                const category = this.getAttribute('data-category');
+                
+                // Show/hide products based on category
+                productCards.forEach(card => {
+                    if (category === 'all' || card.getAttribute('data-category') === category) {
+                        card.style.display = 'block';
+                    } else {
+                        card.style.display = 'none';
+                    }
+                });
+            });
+        });
+
+        // Product modal functionality
+        const modal = document.getElementById('product-modal');
+        const closeModalBtn = document.getElementById('close-modal');
+        const closeModalFooterBtn = document.getElementById('close-modal-btn');
+        const viewProductButtons = document.querySelectorAll('.view-product-details');
+        
+        // Sample product data (in a real application, this would come from a database)
+        const productData = {
+            1: {
+                name: "Pan Rústico",
+                price: "2.50€",
+                description: "Nuestro pan rústico es elaborado con masa madre natural y fermentado durante 24 horas para conseguir un sabor único y una textura perfecta. La corteza crujiente y la miga alveolada son características de este pan tradicional.",
+                image: "https://placehold.co/600x400/e0cec7/43302b?text=Pan+Rústico",
+                ingredients: "Harina de trigo, agua, masa madre natural, sal marina.",
+                nutrition: "Calorías: 250 kcal, Proteínas: 8g, Carbohidratos: 48g, Grasas: 1g",
+                allergens: "Contiene gluten (trigo)."
+            },
+            2: {
+                name: "Baguette Tradicional",
+                price: "1.80€",
+                description: "Nuestra baguette tradicional francesa se caracteriza por su corteza crujiente y su miga ligera y alveolada. Perfecta para acompañar cualquier comida o para preparar deliciosos bocadillos.",
+                image: "https://placehold.co/600x400/e0cec7/43302b?text=Baguette",
+                ingredients: "Harina de trigo, agua, levadura, sal.",
+                nutrition: "Calorías: 230 kcal, Proteínas: 7g, Carbohidratos: 46g, Grasas: 1g",
+                allergens: "Contiene gluten (trigo)."
+            }
+            // More products would be defined here
+        };
+        
+        viewProductButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                const productId = this.getAttribute('data-product-id');
+                const product = productData[productId] || {
+                    name: "Producto Ejemplo",
+                    price: "0.00€",
+                    description: "Descripción detallada del producto...",
+                    image: "https://placehold.co/600x400/e0cec7/43302b",
+                    ingredients: "Lista de ingredientes...",
+                    nutrition: "Información nutricional...",
+                    allergens: "Información sobre alérgenos..."
+                };
+                
+                // Populate modal with product data
+                document.getElementById('modal-title').textContent = "Detalles del Producto";
+                document.getElementById('modal-product-name').textContent = product.name;
+                document.getElementById('modal-price').textContent = product.price;
+                document.getElementById('modal-description').textContent = product.description;
+                document.getElementById('modal-image').src = product.image;
+                document.getElementById('modal-image').alt = product.name;
+                document.getElementById('modal-ingredients').textContent = product.ingredients;
+                
+                // For nutrition info, we might need to handle HTML content
+                const nutritionEl = document.getElementById('modal-nutrition');
+                if (typeof product.nutrition === 'string') {
+                    nutritionEl.innerHTML = product.nutrition.replace(/\n/g, '<br>');
+                } else {
+                    nutritionEl.textContent = product.nutrition;
+                }
+                
+                document.getElementById('modal-allergens').textContent = product.allergens;
+                
+                // Show modal
+                modal.classList.remove('hidden');
+            });
+        });
+        
+        // Close modal functionality
+        closeModalBtn.addEventListener('click', function() {
+            modal.classList.add('hidden');
+        });
+        
+        closeModalFooterBtn.addEventListener('click', function() {
+            modal.classList.add('hidden');
+        });
+        
+        // Close modal when clicking outside
+        modal.addEventListener('click', function(event) {
+            if (event.target === modal) {
+                modal.classList.add('hidden');
+            }
+        });
+    </script>
+</body>
+</html>

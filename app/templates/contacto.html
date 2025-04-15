@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contacto - Panadería Bernal</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'bread-brown': {
+                            50: '#fdf8f6',
+                            100: '#f2e8e5',
+                            200: '#eaddd7',
+                            300: '#e0cec7',
+                            400: '#d2bab0',
+                            500: '#bfa094',
+                            600: '#a18072',
+                            700: '#977669',
+                            800: '#846358',
+                            900: '#43302b',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+</head>
+<body class="flex flex-col min-h-screen bg-bread-brown-50">
+    <!-- Header/Navigation -->
+    <header class="bg-white shadow-md sticky top-0 z-50">
+        <div class="container mx-auto px-4">
+            <div class="flex justify-between items-center py-4">
+                <div class="flex items-center">
+                    <a href="{{ url_for('main.home') }}" class="text-2xl font-bold text-bread-brown-800">
+                        <span class="text-bread-brown-600">Panadería</span> Bernal
+                    </a>
+                </div>
+                
+                <!-- Desktop Navigation -->
+                <nav class="hidden md:flex space-x-8">
+                    <a href="{{ url_for('main.home') }}" class="text-bread-brown-800 hover:text-bread-brown-600 font-medium">Inicio</a>
+                    <a href="{{ url_for('main.productos') }}" class="text-bread-brown-800 hover:text-bread-brown-600 font-medium">Productos</a>
+                    <a href="{{ url_for('main.sobre_nosotros') }}" class="text-bread-brown-800 hover:text-bread-brown-600 font-medium">Sobre Nosotros</a>
+                    <a href="{{ url_for('main.contacto') }}" class="text-bread-brown-800 hover:text-bread-brown-600 font-medium">Contacto</a>
+                </nav>
+                
+                <!-- Mobile Navigation Button -->
+                <div class="md:hidden">
+                    <button id="mobile-menu-button" class="text-bread-brown-800 focus:outline-none">
+                        <i class="fas fa-bars text-2xl"></i>
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Mobile Navigation Menu -->
+            <div id="mobile-menu" class="md:hidden hidden pb-4">
+                <a href="{{ url_for('main.home') }}" class="block py-2 text-bread-brown-800 hover:text-bread-brown-600 font-medium">Inicio</a>
+                <a href="{{ url_for('main.productos') }}" class="block py-2 text-bread-brown-800 hover:text-bread-brown-600 font-medium">Productos</a>
+                <a href="{{ url_for('main.sobre_nosotros') }}" class="block py-2 text-bread-brown-800 hover:text-bread-brown-600 font-medium">Sobre Nosotros</a>
+                <a href="{{ url_for('main.contacto') }}" class="block py-2 text-bread-brown-800 hover:text-bread-brown-600 font-medium">Contacto</a>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <!-- Page Header -->
+        <section class="bg-bread-brown-600 text-white py-12">
+            <div class="container mx-auto px-4">
+                <h1 class="text-4xl font-bold mb-4">Contacto</h1>
+                <p class="text-xl max-w-3xl">¿Tienes alguna pregunta o comentario? Estamos aquí para ayudarte. Ponte en contacto con nosotros y te responderemos lo antes posible.</p>
+            </div>
+        </section>
+
+        <!-- Contact Information and Map -->
+        <section class="py-16 bg-white">
+            <div class="container mx-auto px-4">
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
+                    <!-- Contact Information -->
+                    <div>
+                        <h2 class="text-2xl font-bold mb-8 text-bread-brown-800">Información de Contacto</h2>
+                        
+                        <div class="space-y-8">
+                            <div class="flex items-start">
+                                <div class="bg-bread-brown-100 rounded-full p-4 mr-4">
+                                    <i class="fas fa-map-marker-alt text-bread-brown-700 text-xl"></i>
+                                </div>
+                                <div>
+                                    <h3 class="text-xl font-medium text-bread-brown-800 mb-2">Dirección</h3>
+                                    <p class="text-bread-brown-700">Barrio el Centro, 2da C Oriente 6 PG6</p>
+                                    <p class="text-bread-brown-700">San Jose Villanueva</p>
+                                </div>
+                            </div>
+                            
+                            <div class="flex items-start">
+                                <div class="bg-bread-brown-100 rounded-full p-4 mr-4">
+                                    <i class="fas fa-phone text-bread-brown-700 text-xl"></i>
+                                </div>
+                                <div>
+                                    <h3 class="text-xl font-medium text-bread-brown-800 mb-2">Teléfono</h3>
+                                    <p class="text-bread-brown-700">7816 4048</p>
+                                </div>
+                            </div>
+                            
+                            <div class="flex items-start">
+                                <div class="bg-bread-brown-100 rounded-full p-4 mr-4">
+                                    <i class="fas fa-envelope text-bread-brown-700 text-xl"></i>
+                                </div>
+                                <div>
+                                    <h3 class="text-xl font-medium text-bread-brown-800 mb-2">Email</h3>
+                                    <p class="text-bread-brown-700">panaderiabernal2020@gmail.com</p>
+                                </div>
+                            </div>
+                            
+                            <div class="flex items-start">
+                                <div class="bg-bread-brown-100 rounded-full p-4 mr-4">
+                                    <i class="fas fa-clock text-bread-brown-700 text-xl"></i>
+                                </div>
+                                <div>
+                                    <h3 class="text-xl font-medium text-bread-brown-800 mb-2">Horario</h3>
+                                    <p class="text-bread-brown-700 font-medium">Abierto ahora</p>
+                                    <p class="text-bread-brown-700">Lunes: 8:00 a. m. - 7:30 p. m.</p>
+                                    <p class="text-bread-brown-700">Martes: 8:00 a. m. - 7:30 p. m.</p>
+                                    <p class="text-bread-brown-700">Miércoles: 8:00 a. m. - 7:30 p. m.</p>
+                                    <p class="text-bread-brown-700">Jueves: 8:00 a. m. - 7:30 p. m.</p>
+                                    <p class="text-bread-brown-700">Viernes: 8:00 a. m. - 7:30 p. m.</p>
+                                    <p class="text-bread-brown-700">Sábado: 8:00 a. m. - 6:00 p. m.</p>
+                                    <p class="text-bread-brown-700 font-medium">Domingo: CERRADO</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="mt-12">
+                            <h3 class="text-xl font-medium text-bread-brown-800 mb-4">Síguenos en Redes Sociales</h3>
+                            <div class="flex space-x-4">
+                                <a href="https://www.facebook.com/PanaderiaBernal10/" target="_blank" class="bg-bread-brown-100 hover:bg-bread-brown-200 text-bread-brown-700 p-3 rounded-full transition duration-300">
+                                    <i class="fab fa-facebook-f"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Google Maps -->
+                    <div>
+                        <h2 class="text-2xl font-bold mb-8 text-bread-brown-800">Nuestra Ubicación</h2>
+                        
+                        <div class="bg-white p-2 rounded-lg shadow-md overflow-hidden h-[500px]">
+                            <!-- Google Maps iframe -->
+                            <iframe 
+                                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1157.6859345606306!2d-89.26445919846233!3d13.577801177888933!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8f632dfd8375579f%3A0x419b69789053c8b1!2sPanader%C3%ADa%20Bernal%20SJV%20Centro!5e1!3m2!1ses-419!2ssv!4v1744737694867!5m2!1ses-419!2ssv" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"
+                                width="100%" 
+                                height="100%" 
+                                style="border:0;" 
+                                allowfullscreen="" 
+                                loading="lazy" 
+                                referrerpolicy="no-referrer-when-downgrade">
+                            </iframe>
+                        </div>
+                        
+                        <div class="mt-4 bg-bread-brown-50 p-4 rounded-lg border border-bread-brown-100">
+                            <p class="text-bread-brown-700 flex items-center">
+                                <i class="fas fa-info-circle text-bread-brown-600 mr-2"></i>
+                                Visítanos en nuestra panadería para disfrutar de nuestros productos recién horneados.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- FAQ Section -->
+        <section class="py-16 bg-white">
+            <div class="container mx-auto px-4">
+                <h2 class="text-2xl font-bold mb-8 text-bread-brown-800 text-center">Preguntas Frecuentes</h2>
+                
+                <div class="max-w-3xl mx-auto space-y-6">
+                    <!-- FAQ Item 1 -->
+                    <div class="bg-bread-brown-50 rounded-lg shadow-md overflow-hidden">
+                        <button class="faq-toggle w-full text-left px-6 py-4 flex justify-between items-center focus:outline-none">
+                            <span class="text-lg font-medium text-bread-brown-800">¿Realizan envíos a domicilio?</span>
+                            <i class="fas fa-chevron-down text-bread-brown-600 transition-transform duration-300"></i>
+                        </button>
+                        <div class="faq-content hidden px-6 py-4 border-t border-bread-brown-200">
+                            <p class="text-bread-brown-700">
+                                Sí, realizamos envíos a domicilio en un radio de 10 km. Para pedidos superiores a 20€, el envío es gratuito. Para pedidos menores, se aplica un cargo de 3€ por entrega.
+                            </p>
+                        </div>
+                    </div>
+                    
+                    <!-- FAQ Item 2 -->
+                    <div class="bg-bread-brown-50 rounded-lg shadow-md overflow-hidden">
+                        <button class="faq-toggle w-full text-left px-6 py-4 flex justify-between items-center focus:outline-none">
+                            <span class="text-lg font-medium text-bread-brown-800">¿Cómo puedo realizar un pedido especial?</span>
+                            <i class="fas fa-chevron-down text-bread-brown-600 transition-transform duration-300"></i>
+                        </button>
+                        <div class="faq-content hidden px-6 py-4 border-t border-bread-brown-200">
+                            <p class="text-bread-brown-700">
+                                Para pedidos especiales como tartas personalizadas o grandes cantidades, te recomendamos contactar con nosotros con al menos 48 horas de antelación. Puedes hacerlo por teléfono, email o a través del formulario de contacto de esta página.
+                            </p>
+                        </div>
+                    </div>
+                    
+                    <!-- FAQ Item 3 -->
+                    <div class="bg-bread-brown-50 rounded-lg shadow-md overflow-hidden">
+                        <button class="faq-toggle w-full text-left px-6 py-4 flex justify-between items-center focus:outline-none">
+                            <span class="text-lg font-medium text-bread-brown-800">¿Tienen productos sin gluten?</span>
+                            <i class="fas fa-chevron-down text-bread-brown-600 transition-transform duration-300"></i>
+                        </button>
+                        <div class="faq-content hidden px-6 py-4 border-t border-bread-brown-200">
+                            <p class="text-bread-brown-700">
+                                Sí, disponemos de una línea de productos sin gluten elaborados en un obrador separado para evitar contaminación cruzada. Puedes consultar nuestra oferta en la sección de Productos Especiales.
+                            </p>
+                        </div>
+                    </div>
+                    
+                    <!-- FAQ Item 4 -->
+                    <div class="bg-bread-brown-50 rounded-lg shadow-md overflow-hidden">
+                        <button class="faq-toggle w-full text-left px-6 py-4 flex justify-between items-center focus:outline-none">
+                            <span class="text-lg font-medium text-bread-brown-800">¿Ofrecen servicio de catering para eventos?</span>
+                            <i class="fas fa-chevron-down text-bread-brown-600 transition-transform duration-300"></i>
+                        </button>
+                        <div class="faq-content hidden px-6 py-4 border-t border-bread-brown-200">
+                            <p class="text-bread-brown-700">
+                                Sí, ofrecemos servicio de catering para eventos como reuniones de empresa, celebraciones familiares o eventos especiales. Contáctanos para más información y presupuestos personalizados.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-bread-brown-800 text-white py-12 mt-auto">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <!-- About -->
+                <div>
+                    <h3 class="text-xl font-bold mb-4">Panadería Bernal</h3>
+                    <p class="text-bread-brown-200 mb-4">
+                        Tradición y sabor en cada bocado desde 1985. Elaboramos pan artesanal, bollería y pasteles con los mejores ingredientes.
+                    </p>
+                    <div class="flex space-x-4">
+                        <a href="https://www.facebook.com/PanaderiaBernal10/" target="_blank" class="text-bread-brown-200 hover:text-white transition duration-300">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- Quick Links -->
+                <div>
+                    <h3 class="text-xl font-bold mb-4">Enlaces Rápidos</h3>
+                    <ul class="space-y-2">
+                        <li><a href="{{ url_for('main.home') }}" class="text-bread-brown-200 hover:text-white transition duration-300">Inicio</a></li>
+                        <li><a href="{{ url_for('main.productos') }}" class="text-bread-brown-200 hover:text-white transition duration-300">Productos</a></li>
+                        <li><a href="{{ url_for('main.sobre_nosotros') }}" class="text-bread-brown-200 hover:text-white transition duration-300">Sobre Nosotros</a></li>
+                        <li><a href="{{ url_for('main.contacto') }}" class="text-bread-brown-200 hover:text-white transition duration-300">Contacto</a></li>
+                    </ul>
+                </div>
+                
+                <!-- Contact -->
+                <div>
+                    <h3 class="text-xl font-bold mb-4">Contacto</h3>
+                    <ul class="space-y-2">
+                        <li class="flex items-start">
+                            <i class="fas fa-map-marker-alt mt-1 mr-2 text-bread-brown-300"></i>
+                            <span class="text-bread-brown-200">Barrio el Centro, 2da C Oriente 6 PG6, San Jose Villanueva</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-phone mr-2 text-bread-brown-300"></i>
+                            <span class="text-bread-brown-200">7816 4048</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-envelope mr-2 text-bread-brown-300"></i>
+                            <span class="text-bread-brown-200">panaderiabernal2020@gmail.com</span>
+                        </li>
+                    </ul>
+                </div>
+                
+                <!-- Hours -->
+                <div>
+                    <h3 class="text-xl font-bold mb-4">Horario</h3>
+                    <ul class="space-y-2">
+                        <li class="text-bread-brown-200">Lunes a Viernes: 8:00 a.m. - 7:30 p.m.</li>
+                        <li class="text-bread-brown-200">Sábados: 8:00 a.m. - 6:00 p.m.</li>
+                        <li class="text-bread-brown-200">Domingos: CERRADO</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="border-t border-bread-brown-700 mt-8 pt-8 text-center text-bread-brown-300">
+                <p>&copy; <script>document.write(new Date().getFullYear())</script> Panadería Bernal. Todos los derechos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile menu toggle
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+        
+        mobileMenuButton.addEventListener('click', function() {
+            mobileMenu.classList.toggle('hidden');
+            
+            // Change icon based on menu state
+            const icon = mobileMenuButton.querySelector('i');
+            if (mobileMenu.classList.contains('hidden')) {
+                icon.classList.remove('fa-times');
+                icon.classList.add('fa-bars');
+            } else {
+                icon.classList.remove('fa-bars');
+                icon.classList.add('fa-times');
+            }
+        });
+
+        // FAQ toggle
+        const faqToggles = document.querySelectorAll('.faq-toggle');
+        
+        faqToggles.forEach(toggle => {
+            toggle.addEventListener('click', function() {
+                const content = this.nextElementSibling;
+                const icon = this.querySelector('i');
+                
+                content.classList.toggle('hidden');
+                icon.classList.toggle('rotate-180');
+            });
+        });
+    </script>
+</body>
+</html>

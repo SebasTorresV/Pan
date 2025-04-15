@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestión de Anuncios - Panadería Bernal</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'bread-brown': {
+                            50: '#f9f6f3',
+                            100: '#f1e9e1',
+                            200: '#e6d5c7',
+                            300: '#d9bea8',
+                            400: '#c9a285',
+                            500: '#bb8c6a',
+                            600: '#a97658',
+                            700: '#8c5e48',
+                            800: '#734e3e',
+                            900: '#5f4235',
+                            950: '#332219',
+                        }
+                    },
+                    fontFamily: {
+                        'sans': ['Inter', 'sans-serif'],
+                    },
+                }
+            }
+        }
+    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        .card-hover {
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+        .card-hover:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
+        .btn-primary {
+            transition: all 0.2s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        .btn-primary:after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 5px;
+            height: 5px;
+            background: rgba(255, 255, 255, 0.5);
+            opacity: 0;
+            border-radius: 100%;
+            transform: scale(1, 1) translate(-50%);
+            transform-origin: 50% 50%;
+        }
+        .btn-primary:hover:after {
+            animation: ripple 1s ease-out;
+        }
+        @keyframes ripple {
+            0% {
+                transform: scale(0, 0);
+                opacity: 0.5;
+            }
+            100% {
+                transform: scale(20, 20);
+                opacity: 0;
+            }
+        }
+        .anuncio-item {
+            transition: all 0.3s ease;
+        }
+        .anuncio-item:hover {
+            background-color: #f9f6f3;
+        }
+    </style>
+</head>
+<body class="bg-bread-brown-50 text-bread-brown-900 min-h-screen font-sans">
+    <div class="max-w-5xl mx-auto py-8 px-6">
+        <header class="mb-10 bg-white rounded-xl shadow-md p-6 border border-bread-brown-100 card-hover">
+            <div class="flex flex-col md:flex-row md:items-center md:justify-between">
+                <div>
+                    <h1 class="text-3xl font-bold text-bread-brown-800 mb-2 flex items-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 mr-3 text-bread-brown-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5.882V19.24a1.76 1.76 0 01-3.417.592l-2.147-6.15M18 13a3 3 0 100-6M5.436 13.683A4.001 4.001 0 017 6h1.832c4.1 0 7.625-1.234 9.168-3v14c-1.543-1.766-5.067-3-9.168-3H7a3.988 3.988 0 01-1.564-.317z" />
+                        </svg>
+                        Gestión de Anuncios
+                    </h1>
+                    <p class="text-bread-brown-600 mb-4 md:mb-0">Administra los anuncios que se mostrarán en la página principal</p>
+                </div>
+                <a href="{{ url_for('main.dashboard') }}" class="inline-flex items-center px-4 py-2 bg-bread-brown-100 text-bread-brown-700 rounded-lg hover:bg-bread-brown-200 transition-colors shadow-sm">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+                    </svg>
+                    Volver al Panel
+                </a>
+            </div>
+        </header>
+
+        <!-- Formulario para nuevo anuncio -->
+        <section class="bg-white rounded-xl shadow-md p-6 mb-10 border border-bread-brown-100 card-hover">
+            <h2 class="text-xl font-bold mb-6 text-bread-brown-800 flex items-center border-b border-bread-brown-100 pb-4">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-2 text-bread-brown-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+                </svg>
+                Agregar Nuevo Anuncio
+            </h2>
+            <form method="POST" action="{{ url_for('main.agregar_anuncio') }}" class="space-y-5">
+                <div class="space-y-2">
+                    <label class="block font-medium text-bread-brown-700">Título</label>
+                    <input type="text" name="titulo" required 
+                           class="w-full border border-bread-brown-200 px-4 py-3 rounded-lg focus:ring-2 focus:ring-bread-brown-400 focus:border-bread-brown-400 transition-all shadow-sm"
+                           placeholder="Ej: Oferta especial de fin de semana">
+                </div>
+                <div class="space-y-2">
+                    <label class="block font-medium text-bread-brown-700">Contenido</label>
+                    <textarea name="contenido" rows="4" required 
+                              class="w-full border border-bread-brown-200 px-4 py-3 rounded-lg focus:ring-2 focus:ring-bread-brown-400 focus:border-bread-brown-400 transition-all shadow-sm"
+                              placeholder="Describe el anuncio con detalle..."></textarea>
+                    <p class="text-sm text-bread-brown-500">Este contenido se mostrará a los clientes en la página principal.</p>
+                </div>
+                <div class="pt-2">
+                    <button type="submit" class="bg-bread-brown-600 text-white px-6 py-3 rounded-lg hover:bg-bread-brown-700 shadow-md flex items-center btn-primary">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5.882V19.24a1.76 1.76 0 01-3.417.592l-2.147-6.15M18 13a3 3 0 100-6M5.436 13.683A4.001 4.001 0 017 6h1.832c4.1 0 7.625-1.234 9.168-3v14c-1.543-1.766-5.067-3-9.168-3H7a3.988 3.988 0 01-1.564-.317z" />
+                        </svg>
+                        Publicar Anuncio
+                    </button>
+                </div>
+            </form>
+        </section>
+
+        <!-- Lista de anuncios existentes -->
+        <section class="bg-white rounded-xl shadow-md p-6 border border-bread-brown-100 card-hover">
+            <h2 class="text-xl font-bold mb-6 text-bread-brown-800 flex items-center border-b border-bread-brown-100 pb-4">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-2 text-bread-brown-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
+                </svg>
+                Anuncios Publicados
+            </h2>
+            {% if anuncios %}
+                <ul class="divide-y divide-bread-brown-100 rounded-lg border border-bread-brown-100 overflow-hidden shadow-sm">
+                    {% for anuncio in anuncios %}
+                        <li class="py-5 px-6 anuncio-item">
+                            <div class="flex flex-col md:flex-row md:justify-between md:items-start gap-4">
+                                <div class="flex-grow">
+                                    <div class="flex items-center">
+                                        <span class="w-2 h-2 bg-green-500 rounded-full mr-2"></span>
+                                        <h3 class="text-lg font-semibold text-bread-brown-800">{{ anuncio.titulo }}</h3>
+                                    </div>
+                                    <p class="text-bread-brown-600 mt-2">{{ anuncio.contenido }}</p>
+                                    <div class="flex items-center mt-3 text-sm text-bread-brown-400">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                                        </svg>
+                                        Publicado el {{ anuncio.fecha }}
+                                    </div>
+                                </div>
+                                <div class="flex items-center">
+                                    <a href="{{ url_for('main.eliminar_anuncio', id=anuncio.id) }}" 
+                                       class="inline-flex items-center px-3 py-2 bg-red-50 text-red-600 rounded-lg hover:bg-red-100 transition-colors"
+                                       onclick="return confirm('¿Estás seguro de que deseas eliminar este anuncio?')">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                                        </svg>
+                                        Eliminar
+                                    </a>
+                                </div>
+                            </div>
+                        </li>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <div class="text-center py-10 bg-bread-brown-50 rounded-lg border border-dashed border-bread-brown-200">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 mx-auto text-bread-brown-300 mb-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5.882V19.24a1.76 1.76 0 01-3.417.592l-2.147-6.15M18 13a3 3 0 100-6M5.436 13.683A4.001 4.001 0 017 6h1.832c4.1 0 7.625-1.234 9.168-3v14c-1.543-1.766-5.067-3-9.168-3H7a3.988 3.988 0 01-1.564-.317z" />
+                    </svg>
+                    <p class="text-bread-brown-500 font-medium">No hay anuncios publicados aún.</p>
+                    <p class="text-bread-brown-400 text-sm mt-1">Utiliza el formulario superior para crear tu primer anuncio.</p>
+                </div>
+            {% endif %}
+        </section>
+
+        <!-- Consejos para anuncios efectivos -->
+        <section class="mt-8 bg-bread-brown-100 rounded-xl p-6 shadow-inner border border-bread-brown-200">
+            <h3 class="text-lg font-semibold text-bread-brown-800 mb-3 flex items-center">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2 text-bread-brown-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+                Consejos para anuncios efectivos
+            </h3>
+            <ul class="space-y-2 text-bread-brown-700 text-sm">
+                <li class="flex items-start">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2 text-bread-brown-600 flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                    </svg>
+                    <span>Mantén los títulos concisos y llamativos para captar la atención.</span>
+                </li>
+                <li class="flex items-start">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2 text-bread-brown-600 flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                    </svg>
+                    <span>Incluye información específica como fechas, precios o promociones.</span>
+                </li>
+                <li class="flex items-start">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2 text-bread-brown-600 flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                    </svg>
+                    <span>Actualiza regularmente los anuncios para mantener el interés de los clientes.</span>
+                </li>
+            </ul>
+        </section>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-gradient-to-r from-bread-brown-800 to-bread-brown-900 text-white py-6 text-center mt-12">
+        <div class="max-w-7xl mx-auto px-6">
+            <p class="text-sm">&copy; {{ year }} Panadería Bernal - Panel de Administración</p>
+        </div>
+    </footer>
+</body>
+</html>
